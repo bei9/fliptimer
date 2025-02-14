@@ -8,20 +8,20 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var FlipDown = function () {
-  function FlipDown(uts) {
-    var el = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "flipdown";
+var FlipTimer = function () {
+  function FlipTimer(uts) {
+    var el = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "fliptimer";
     var opt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-    _classCallCheck(this, FlipDown);
+    _classCallCheck(this, FlipTimer);
 
     if (typeof uts !== "number") {
-      throw new Error("FlipDown: Constructor expected unix timestamp, got ".concat(_typeof(uts), " instead."));
+      throw new Error("FlipTimer: Constructor expected unix timestamp, got ".concat(_typeof(uts), " instead."));
     }
 
     if (_typeof(el) === "object") {
       opt = el;
-      el = "flipdown";
+      el = "fliptimer";
     }
 
     this.version = "0.3.2";
@@ -46,10 +46,10 @@ var FlipDown = function () {
 
     this._setOptions();
 
-    console.log("FlipDown ".concat(this.version, " (Theme: ").concat(this.opts.theme, ")"));
+    console.log("FlipTimer ".concat(this.version, " (Theme: ").concat(this.opts.theme, ")"));
   }
 
-  _createClass(FlipDown, [{
+  _createClass(FlipTimer, [{
     key: "start",
     value: function start() {
       if (!this.initialised) this._init();
@@ -74,19 +74,8 @@ var FlipDown = function () {
   }, {
     key: "_hasCountdownEnded",
     value: function _hasCountdownEnded() {
-      if (this.epoch - this.now < 0) {
-        this.countdownEnded = true;
+      return false;
 
-        if (this.hasEndedCallback != null) {
-          this.hasEndedCallback();
-          this.hasEndedCallback = null;
-        }
-
-        return true;
-      } else {
-        this.countdownEnded = false;
-        return false;
-      }
     }
   }, {
     key: "_parseOptions",
@@ -105,7 +94,7 @@ var FlipDown = function () {
   }, {
     key: "_setOptions",
     value: function _setOptions() {
-      this.element.classList.add("flipdown__theme-".concat(this.opts.theme));
+      this.element.classList.add("fliptimer__theme-".concat(this.opts.theme));
     }
   }, {
     key: "_init",
@@ -115,7 +104,7 @@ var FlipDown = function () {
       if (this._hasCountdownEnded()) {
         this.daysremaining = 0;
       } else {
-        this.daysremaining = Math.floor((this.epoch - this.now) / 86400).toString().length;
+        this.daysremaining = Math.floor((this.now - this.epoch) / 86400).toString().length;
       }
 
       var dayRotorCount = this.daysremaining <= 2 ? 2 : this.daysremaining;
@@ -125,7 +114,6 @@ var FlipDown = function () {
       }
 
       var dayRotors = [];
-
       for (var i = 0; i < dayRotorCount; i++) {
         dayRotors.push(this.rotors[i]);
       }
@@ -194,7 +182,7 @@ var FlipDown = function () {
     key: "_tick",
     value: function _tick() {
       this.now = this._getTime();
-      var diff = this.epoch - this.now <= 0 ? 0 : this.epoch - this.now;
+      var diff = this.now - this.epoch;
       this.clockValues.d = Math.floor(diff / 86400);
       diff -= this.clockValues.d * 86400;
       this.clockValues.h = Math.floor(diff / 3600);
@@ -262,7 +250,7 @@ var FlipDown = function () {
     }
   }]);
 
-  return FlipDown;
+  return FlipTimer;
 }();
 
 function pad(n, len) {

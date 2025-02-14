@@ -1,25 +1,25 @@
 {
-  "name": "flipdown",
+  "name": "fliptimer",
   "version": "0.3.2",
-  "description": "A lightweight and performant flip styled countdown clock",
-  "main": "src/flipdown.js",
+  "description": "A lightweight and performant flip style timer",
+  "main": "src/fliptimer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf dist && mkdir -p dist && rm -rf example/css/flipdown && mkdir -p example/css/flipdown && rm -rf example/js/flipdown && mkdir -p example/js/flipdown",
-    "dist": "npx babel src/flipdown.js -o dist/flipdown.js --no-comments && npx babel src/flipdown.js --presets=minify --no-comments -o dist/flipdown.min.js && cp src/flipdown.css dist/flipdown.css && uglifycss src/flipdown.css > dist/flipdown.min.css",
-    "example": "npx babel src/flipdown.js -o example/js/flipdown/flipdown.js --no-comments && cp dist/flipdown.css example/css/flipdown/flipdown.css",
+    "clean": "rm -rf dist && mkdir -p dist && rm -rf example/css/fliptimer && mkdir -p example/css/fliptimer && rm -rf example/js/fliptimer && mkdir -p example/js/fliptimer",
+    "dist": "npx babel src/fliptimer.js -o dist/fliptimer.js --no-comments && npx babel src/fliptimer.js --presets=minify --no-comments -o dist/fliptimer.min.js && cp src/fliptimer.css dist/fliptimer.css && uglifycss src/fliptimer.css > dist/fliptimer.min.css",
+    "example": "npx babel src/fliptimer.js -o example/js/fliptimer/fliptimer.js --no-comments && cp dist/fliptimer.css example/css/fliptimer/fliptimer.css",
     "build": "npm run clean && npm run dist && npm run example"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/PButcher/flipdown.git"
+    "url": "git+ssh://git@github.com/bei9/fliptimer.git"
   },
-  "author": "Peter Butcher <pbutcher93@gmail.com>",
+  "author": "Jysir",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/PButcher/flipdown/issues"
+    "url": "https://github.com/bei9/fliptimer/issues"
   },
-  "homepage": "https://github.com/PButcher/flipdown#readme",
+  "homepage": "https://github.com/bei9/fliptimer#readme",
   "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.1.0",

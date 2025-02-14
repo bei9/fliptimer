@@ -1,27 +1,27 @@
 /**
- * @name FlipDown
- * @description Flip styled countdown clock
- * @author Peter Butcher (PButcher) <pbutcher93[at]gmail[dot]com>
- * @param {number} uts - Time to count down to as unix timestamp
- * @param {string} el - DOM element to attach FlipDown to
+ * @name FlipTimer
+ * @description Flip styled timer
+ * @author Jysir 
+ * @param {number} uts - Time elapsed since as UNIX timestamp
+ * @param {string} el - DOM element to attach FlipTimer to
  * @param {object} opt - Optional configuration settings
  **/
-class FlipDown {
-  constructor(uts, el = "flipdown", opt = {}) {
+class FlipTimer {
+  constructor(uts, el = "fliptimer", opt = {}) {
     // If uts is not specified
     if (typeof uts !== "number") {
       throw new Error(
-        `FlipDown: Constructor expected unix timestamp, got ${typeof uts} instead.`
+        `FlipTimer: Constructor expected unix timestamp, got ${typeof uts} instead.`
       );
     }
 
     // If opt is specified, but not el
     if (typeof el === "object") {
       opt = el;
-      el = "flipdown";
+      el = "fliptimer";
     }
 
-    // FlipDown version
+    // FlipTimer version
     this.version = "0.3.2";
 
     // Initialised?
@@ -33,13 +33,13 @@ class FlipDown {
     // UTS to count down to
     this.epoch = uts;
 
-    // UTS passed to FlipDown is in the past
+    // UTS passed to FlipTimer is in the past
     this.countdownEnded = false;
 
     // User defined callback for countdown end
     this.hasEndedCallback = null;
 
-    // FlipDown DOM element
+    // FlipTimer DOM element
     this.element = document.getElementById(el);
 
     // Rotor DOM elements
@@ -72,7 +72,7 @@ class FlipDown {
     this._setOptions();
 
     // Print Version
-    console.log(`FlipDown ${this.version} (Theme: ${this.opts.theme})`);
+    console.log(`FlipTimer ${this.version} (Theme: ${this.opts.theme})`);
   }
 
   /**
@@ -120,28 +120,11 @@ class FlipDown {
    * @name _hasCountdownEnded
    * @description Has the countdown ended?
    * @author PButcher
+   * @modified Jysir
    **/
   _hasCountdownEnded() {
-    // Countdown has ended
-    if (this.epoch - this.now < 0) {
-      this.countdownEnded = true;
+    return false;
 
-      // Fire the ifEnded callback once if it was set
-      if (this.hasEndedCallback != null) {
-        // Call ifEnded callback
-        this.hasEndedCallback();
-
-        // Remove the callback
-        this.hasEndedCallback = null;
-      }
-
-      return true;
-
-      // Countdown has not ended
-    } else {
-      this.countdownEnded = false;
-      return false;
-    }
   }
 
   /**
@@ -169,13 +152,14 @@ class FlipDown {
    **/
   _setOptions() {
     // Apply theme
-    this.element.classList.add(`flipdown__theme-${this.opts.theme}`);
+    this.element.classList.add(`fliptimer__theme-${this.opts.theme}`);
   }
 
   /**
    * @name _init
    * @description Initialise the countdown
    * @author PButcher
+   * @modified Jysir
    **/
   _init() {
     this.initialised = true;
@@ -184,9 +168,7 @@ class FlipDown {
     if (this._hasCountdownEnded()) {
       this.daysremaining = 0;
     } else {
-      this.daysremaining = Math.floor(
-        (this.epoch - this.now) / 86400
-      ).toString().length;
+      this.daysremaining = Math.floor((this.now - this.epoch) / 86400).toString().length;
     }
     var dayRotorCount = this.daysremaining <= 2 ? 2 : this.daysremaining;
 
@@ -285,13 +267,14 @@ class FlipDown {
    * @name _tick
    * @description Calculate current tick
    * @author PButcher
+   * @modified Jysir
    **/
   _tick() {
     // Get time now
     this.now = this._getTime();
 
     // Between now and epoch
-    var diff = this.epoch - this.now <= 0 ? 0 : this.epoch - this.now;
+    var diff = this.now - this.epoch;
 
     // Days remaining
     this.clockValues.d = Math.floor(diff / 86400);
