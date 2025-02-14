@@ -1,5 +1,5 @@
 <span style="text-align:center;display:block;width:100%;">
-![Example of FlipTimer](images/image.png){ width=500px }
+![Example of FlipTimer](/images/image.png){ width=500px }
 </span>
 
 # FlipTimer
